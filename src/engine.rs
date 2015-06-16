@@ -12,7 +12,7 @@ macro_rules! errorln(
     ($($arg:tt)*) => (
         match writeln!(&mut ::std::io::stderr(), $($arg)* ) {
             Ok(_) => {},
-            Err(x) => panic!("Unable to write to stderr: {}", x),
+            Err(e) => panic!("Unable to write to stderr: {}", e),
         }
     )
 );
@@ -26,7 +26,7 @@ impl Recommender {
   pub fn load_knowlege(path : String) -> Recommender  {
     let file = match File::open(path) {
         Ok(file) => file,
-        Err(..)  => panic!("room"),
+        Err(e)  => panic!("Error occured opening knowlege file: {} ", e),
     };
 
     let reader = BufReader::new(&file);
